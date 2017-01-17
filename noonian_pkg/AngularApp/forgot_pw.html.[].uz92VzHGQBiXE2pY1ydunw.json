@@ -1,0 +1,25 @@
+{
+	"__ver": "sys-pkg:16",
+	"_id": "uz92VzHGQBiXE2pY1ydunw",
+	"css_dependencies": [
+		{
+			"_disp": "bootstrap.min.css",
+			"_id": "o4W541R8SOaAsLdTAFRwBw",
+			"name": "bootstrap.min.css",
+			"path": "bower_components/bootstrap/dist/css"
+		}
+	],
+	"js_dependencies": [
+		{
+			"_disp": "angular.min.js",
+			"_id": "YHk7GG6fQIKjEFXm7zTmFg",
+			"name": "angular.min.js",
+			"path": "bower_components/angular"
+		}
+	],
+	"module": null,
+	"name": "forgot_pw.html",
+	"path": "/",
+	"rolespec": [
+	]
+}

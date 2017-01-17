@@ -1,0 +1,6 @@
+{
+	"__ver": "sys-pkg:2",
+	"_id": "4z1LSTfLQpecUzE9AdkrEw",
+	"body": "Follow the link below to reset your password:\n\n{{{ reset_link }}}",
+	"subject": "{{ subject_line }}"
+}

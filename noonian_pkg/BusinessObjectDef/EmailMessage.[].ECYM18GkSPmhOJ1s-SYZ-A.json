@@ -1,0 +1,18 @@
+{
+	"__ver": "sys-pkg:1",
+	"_id": "ECYM18GkSPmhOJ1s-SYZ-A",
+	"class_name": "EmailMessage",
+	"definition": {
+		"body": {
+			"type": "text"
+		},
+		"recipients": {
+			"ref_class": "EmailRecipientList",
+			"type": "reference"
+		},
+		"subject": {
+			"type": "string"
+		}
+	},
+	"system": true
+}

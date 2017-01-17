@@ -1,0 +1,59 @@
+{
+	"__ver": "af4e6d5e-6c73-4ce6-901f-4a894e8a8ea9:8|vianey:1",
+	"_id": "oJAyYGU-TmmRaVUzIq6TLg",
+	"description": "Objects and APIs to support sending Emails",
+	"key": "sys.email",
+	"major_version": 0,
+	"manifest": {
+		"AngularApp": {
+			"kRd_Ft64QFey_at4tgphXA": {
+				"external_pkg": true,
+				"update_to": "sys:24",
+				"version": "sys:24|sys-pkg:3"
+			},
+			"uz92VzHGQBiXE2pY1ydunw": "sys-pkg:16"
+		},
+		"BusinessObjectDef": {
+			"ECYM18GkSPmhOJ1s-SYZ-A": "sys-pkg:1",
+			"Wquqn1IhTNuZk7M4pNLveg": "sys-pkg:1",
+			"x8JPTt3uSKuEtu2R4qKBNQ": "sys-pkg:1",
+			"xGOtowhXRQKPapjKv1Us7A": "sys-pkg:1"
+		},
+		"CodeModule": {
+			"ZSx0FUI2S3KdenaXgISYPQ": "sys-pkg:5"
+		},
+		"Config": {
+			"4l8p_D7ESVS41zZuAgq5jA": "sys-pkg:3",
+			"D35PIWqFRaaWn_5SyB_CEg": "sys-pkg:1",
+			"O0FJXhFKR6Ou6949OTHzfA": "sys-pkg:7",
+			"Q0e4YR9TTQ-qr2xC3fUwIw": "sys-pkg:1",
+			"ipxt6xkKQquPjOZLWRz4uw": "sys-pkg:1"
+		},
+		"DataTrigger": {
+			"CXX81RnNQ4Cl1m_uzcLhsg": "sys-pkg:13"
+		},
+		"EmailMessage": {
+			"4z1LSTfLQpecUzE9AdkrEw": "sys-pkg:2"
+		},
+		"EmailTransport": {
+			"px8kYWB5SPC72t3Oqvbf7w": "sys-pkg:1"
+		},
+		"LabelGroup": {
+			"8t6faAADT-iEuMoeFQqB8Q": "sys-pkg:1",
+			"Ge2VBpNXSwqKIeFRgV5McA": "sys-pkg:1",
+			"hP2fT989T4C5X8I5iFt11A": "sys-pkg:1"
+		},
+		"WebService": {
+			"VVA5VVZ9RQ-5idW42T07ow": "sys-pkg:2",
+			"tGlPRXCUTDOeD2C5gMB1hw": "sys-pkg:12"
+		}
+	},
+	"minor_version": 7,
+	"name": "Email",
+	"package_file": {
+		"attachment_id": "erK5P7dHSQyih1_-9X4TPw",
+		"filename": "sys.email.0.7.json",
+		"size": 25113,
+		"type": "application/json"
+	}
+}

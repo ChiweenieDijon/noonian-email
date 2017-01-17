@@ -1,0 +1,18 @@
+{
+	"__ver": "sys-pkg:1",
+	"_id": "xGOtowhXRQKPapjKv1Us7A",
+	"abstract": false,
+	"class_name": "EmailTransport",
+	"definition": {
+		"config": {
+			"type": "object"
+		},
+		"name": {
+			"type": "string"
+		},
+		"options": {
+			"type": "object"
+		}
+	},
+	"system": true
+}

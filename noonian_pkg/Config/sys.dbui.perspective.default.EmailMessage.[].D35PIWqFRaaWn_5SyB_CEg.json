@@ -1,0 +1,28 @@
+{
+	"__ver": "sys-pkg:1",
+	"_id": "D35PIWqFRaaWn_5SyB_CEg",
+	"key": "sys.dbui.perspective.default.EmailMessage",
+	"system": false,
+	"value": {
+		"edit": {
+			"layout": [
+				"recipients",
+				"subject",
+				"body"
+			]
+		},
+		"list": {
+			"fields": [
+				"subject",
+				"recipients"
+			]
+		},
+		"view": {
+			"layout": [
+				"recipients",
+				"subject",
+				"body"
+			]
+		}
+	}
+}

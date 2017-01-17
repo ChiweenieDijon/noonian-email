@@ -1,0 +1,19 @@
+{
+	"__ver": "sys-pkg:1",
+	"_id": "x8JPTt3uSKuEtu2R4qKBNQ",
+	"class_name": "EmailRecipientList",
+	"definition": {
+		"addresses": [
+			{
+				"type": "email"
+			}
+		],
+		"name": {
+			"type": "string"
+		},
+		"query_obj": {
+			"type": "object"
+		}
+	},
+	"system": true
+}

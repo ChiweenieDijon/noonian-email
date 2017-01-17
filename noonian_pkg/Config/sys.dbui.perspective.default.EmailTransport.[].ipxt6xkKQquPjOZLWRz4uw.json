@@ -1,0 +1,31 @@
+{
+	"__ver": "sys-pkg:1",
+	"_id": "ipxt6xkKQquPjOZLWRz4uw",
+	"allow_customize": false,
+	"key": "sys.dbui.perspective.default.EmailTransport",
+	"rolespec": [
+	],
+	"system": false,
+	"value": {
+		"edit": {
+			"layout": [
+				"name",
+				"config",
+				"options"
+			]
+		},
+		"list": {
+			"fields": [
+				"name",
+				"config"
+			]
+		},
+		"view": {
+			"layout": [
+				"name",
+				"config",
+				"options"
+			]
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"__ver": "sys-pkg:1",
+	"_id": "px8kYWB5SPC72t3Oqvbf7w",
+	"config": {
+		"auth": {
+			"pass": "pass",
+			"user": "user@gmail.com"
+		},
+		"service": "gmail"
+	},
+	"name": "Gmail - sample"
+}
