@@ -1,0 +1,428 @@
+{
+"metadata":{
+	"_id": "oJAyYGU-TmmRaVUzIq6TLg",
+	"description": "Objects and APIs to support sending Emails",
+	"key": "sys.email",
+	"major_version": 0,
+	"manifest": {
+		"AngularApp": {
+			"kRd_Ft64QFey_at4tgphXA": "sys:24|sys-pkg:4",
+			"uz92VzHGQBiXE2pY1ydunw": "sys-pkg:16"
+		},
+		"BusinessObjectDef": {
+			"ECYM18GkSPmhOJ1s-SYZ-A": "sys-pkg:1",
+			"Wquqn1IhTNuZk7M4pNLveg": "sys-pkg:1",
+			"x8JPTt3uSKuEtu2R4qKBNQ": "sys-pkg:1",
+			"xGOtowhXRQKPapjKv1Us7A": "sys-pkg:1"
+		},
+		"CodeModule": {
+			"ZSx0FUI2S3KdenaXgISYPQ": "sys-pkg:5"
+		},
+		"Config": {
+			"4l8p_D7ESVS41zZuAgq5jA": "sys-pkg:3",
+			"D35PIWqFRaaWn_5SyB_CEg": "sys-pkg:1",
+			"O0FJXhFKR6Ou6949OTHzfA": "sys-pkg:7",
+			"Q0e4YR9TTQ-qr2xC3fUwIw": "sys-pkg:1",
+			"ipxt6xkKQquPjOZLWRz4uw": "sys-pkg:1"
+		},
+		"DataTrigger": {
+			"CXX81RnNQ4Cl1m_uzcLhsg": "sys-pkg:13"
+		},
+		"EmailMessage": {
+			"4z1LSTfLQpecUzE9AdkrEw": "sys-pkg:2"
+		},
+		"EmailTransport": {
+			"px8kYWB5SPC72t3Oqvbf7w": "sys-pkg:1"
+		},
+		"LabelGroup": {
+			"8t6faAADT-iEuMoeFQqB8Q": "sys-pkg:1",
+			"Ge2VBpNXSwqKIeFRgV5McA": "sys-pkg:1",
+			"hP2fT989T4C5X8I5iFt11A": "sys-pkg:1"
+		},
+		"WebService": {
+			"VVA5VVZ9RQ-5idW42T07ow": "sys-pkg:2",
+			"tGlPRXCUTDOeD2C5gMB1hw": "sys-pkg:12"
+		}
+	},
+	"minor_version": 9,
+	"name": "Email"
+},
+"business_objects":[
+{
+	"__ver": "sys-pkg:1",
+	"_class": "BusinessObjectDef",
+	"_id": "ECYM18GkSPmhOJ1s-SYZ-A",
+	"class_name": "EmailMessage",
+	"definition": {
+		"body": {
+			"type": "text"
+		},
+		"recipients": {
+			"ref_class": "EmailRecipientList",
+			"type": "reference"
+		},
+		"subject": {
+			"type": "string"
+		}
+	},
+	"system": true
+},
+{
+	"__ver": "sys-pkg:1",
+	"_class": "BusinessObjectDef",
+	"_id": "Wquqn1IhTNuZk7M4pNLveg",
+	"abstract": false,
+	"class_name": "PasswordResetRequest",
+	"definition": {
+		"code": {
+			"type": "string"
+		},
+		"created_date": {
+			"type": "datetime"
+		},
+		"email": {
+			"type": "email"
+		},
+		"user": {
+			"ref_class": "User",
+			"type": "reference"
+		}
+	},
+	"system": true
+},
+{
+	"__ver": "sys-pkg:1",
+	"_class": "BusinessObjectDef",
+	"_id": "x8JPTt3uSKuEtu2R4qKBNQ",
+	"class_name": "EmailRecipientList",
+	"definition": {
+		"addresses": [
+			{
+				"type": "email"
+			}
+		],
+		"name": {
+			"type": "string"
+		},
+		"query_obj": {
+			"type": "object"
+		}
+	},
+	"system": true
+},
+{
+	"__ver": "sys-pkg:1",
+	"_class": "BusinessObjectDef",
+	"_id": "xGOtowhXRQKPapjKv1Us7A",
+	"abstract": false,
+	"class_name": "EmailTransport",
+	"definition": {
+		"config": {
+			"type": "object"
+		},
+		"name": {
+			"type": "string"
+		},
+		"options": {
+			"type": "object"
+		}
+	},
+	"system": true
+},
+{
+	"__t": "AngularApp",
+	"__ver": "sys:24|sys-pkg:4",
+	"_class": "AngularApp",
+	"_id": "kRd_Ft64QFey_at4tgphXA",
+	"body": "<div class=\"container\" ng-controller=\"LoginController\">\n      <div class=\"row\">\n        <div class=\"col-sm-6\">{{message}}</div>\n      </div>\n      <div class=\"row\">\n        <div class=\"col-sm-6\">\n          <form class=\"form-horizontal\" ng-submit=\"submit()\">\n            <div class=\"form-group\">\n              <label for=\"username\" class=\"control-label\">Username</label>\n              <input type=\"text\" class=\"form-control\" ng-model=\"postData.username\"/>\n            </div>\n            <div class=\"form-group\">\n              <label for=\"password\" class=\"control-label\">Password</label>\n              <input type=\"password\" class=\"form-control\" ng-model=\"postData.password\" />\n            </div>\n            \n            <input type=\"submit\" class=\"btn btn-default\" value=\"Login\" />\n            <a href=\"forgot_pw.html\" target=\"_self\" style=\"float:right\">I forgot my password</a>\n          </form>\n        </div>\n      </div>\n  </div>",
+	"config_function": "function ($controllerProvider, $locationProvider) {\n    \n    $locationProvider.html5Mode(true);\n    \n    $controllerProvider.register('LoginController', function($scope, $http, $location, $window) {\n        console.log('LoginController');\n        \n        document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';\n        \n        $scope.message = \"Please enter username and password below\";\n        $scope.postData = {};\n        \n        var urlParams = $location.search();\n        \n        \n        $scope.submit = function() {\n            \n            $http({\n                method:'POST',\n                url:'auth/login',\n                data:$scope.postData\n            }).then(\n                //Success:\n                function(resp) {\n                    console.log('Login response: ', resp);\n                    var redirectLink = (urlParams && urlParams.originalUrl) || '.';\n                    $window.location.href = redirectLink;\n                },\n                //ERROR\n                function(resp) {\n                    console.log('ERROR', resp);\n                    if(resp.data && resp.data.error === '$invalid_credentials') {\n                        $scope.message = 'Invalid login credentials.  Please try again.';\n                    }\n                    else {\n                        $scope.message = (resp.data && resp.data.error) || resp.statusText\n                    }\n                }\n            );\n            \n        }\n    })\n}",
+	"css_dependencies": [
+		{
+			"_disp": "bootstrap.min.css",
+			"_id": "o4W541R8SOaAsLdTAFRwBw",
+			"name": "bootstrap.min.css",
+			"path": "bower_components/bootstrap/dist/css"
+		}
+	],
+	"head": "<title>Please Log In...</title>",
+	"js_dependencies": [
+		{
+			"_disp": "angular.min.js",
+			"_id": "YHk7GG6fQIKjEFXm7zTmFg",
+			"name": "angular.min.js",
+			"path": "bower_components/angular"
+		}
+	],
+	"name": "login.html",
+	"path": "/",
+	"rolespec": [
+	]
+},
+{
+	"__t": "AngularApp",
+	"__ver": "sys-pkg:16",
+	"_class": "AngularApp",
+	"_id": "uz92VzHGQBiXE2pY1ydunw",
+	"body": "<div class=\"container\" ng-controller=\"ForgotController\">\n      <div class=\"row\">\n        <div class=\"col-sm-6\">{{message}}</div>\n      </div>\n      \n      <div class=\"row\" ng-show=\"showUsername\">\n        <div class=\"col-sm-4 col-md-offset-1\">\n          <form class=\"form-horizontal\" ng-submit=\"submitReq()\">\n            <div class=\"form-group\">\n              <label for=\"username\" class=\"control-label\">Username</label>\n              <input type=\"text\" class=\"form-control\" ng-model=\"postData.username\"/>\n            </div>\n            <input type=\"submit\" class=\"btn btn-default\" value=\"Submit\" />\n          </form>\n        </div>\n      </div>\n      \n      <div class=\"row\" ng-show=\"showResetForm\">\n        <div class=\"col-sm-4 col-md-offset-1\">\n            <ul ng-show=\"complexityRequirements\"><li ng-repeat=\"c in complexityRequirements\">{{c}}</li></ul>\n            <form class=\"form-horizontal\">\n                <div class=\"form-group\">\n                  <label for=\"pw\" class=\"control-label\">New Password</label>\n                  <input name=\"pw\" type=\"password\" class=\"form-control\" ng-model=\"pw\"/>\n                </div>\n                <div class=\"form-group\">\n                  <label for=\"pwConfirm\" class=\"control-label\">Confirm New Password</label>\n                  <input name=\"pwConfirm\" type=\"password\" class=\"form-control\" ng-model=\"pwConfirm\" />\n                </div>\n                <button class=\"btn btn-default\" value=\"Submit\" ng-disabled=\"!pw || (pw != pwConfirm)\" ng-click=\"submitPw()\">Change Password</button>\n            </form>\n        </div>\n    </div>\n    \n    <div class=\"row\" ng-show=\"showLoginLink\">\n        <div class=\"col-sm-4 col-md-offset-1\">\n            <a href=\"login.html\" target=\"_self\">Go to login page...</a>\n        </div>\n    </div>\n      \n  </div>",
+	"config_function": "function ($controllerProvider, $locationProvider) {\n    \n    $locationProvider.html5Mode(true);\n    \n    $controllerProvider.register('ForgotController', function($scope, $http, $location) {\n        \n        var resetCode = $location.search().c;\n        \n        if(resetCode) {\n            $http({\n                method:'GET',\n                url:'ws/sys/validatePasswordReset?code='+resetCode\n            }).then(\n                //Success:\n                function(resp) {\n                    console.log('WS response: ', resp);\n                    if(resp.data) {\n                        \n                        if(resp.data.user) {\n                            $scope.message = 'Please type in your new password below';\n                            $scope.showResetForm = true;\n                        }\n                        if(resp.data.error === '$invalid-code') {\n                            $scope.message = 'Code is either invalid or expired.  Please retry';\n                            $scope.showUsername = true;\n                        }\n                    }\n                    else {\n                        $scope.message('An error occurred.');\n                    }\n                    \n                },\n                //ERROR\n                function(resp) {\n                    console.log('ERROR', resp);\n                    if(resp.data && resp.data.error) {\n                        $scope.message = resp.data.error;\n                    }\n                    else {\n                        $scope.message = 'An error occurred.';   \n                    }\n                }\n            );\n        }\n        else {\n            $scope.message = \"Please enter username below and click 'Submit' to reset your password.\";\n            $scope.showUsername = true;\n            $scope.postData = {};\n        }\n        \n        \n        \n        \n        \n        $scope.submitReq = function() {\n            \n            $http({\n                method:'POST',\n                url:'ws/sys/passwordReset',\n                data:$scope.postData\n            }).then(\n                //Success:\n                function(resp) {\n                    console.log('WS response: ', resp);\n                    if(resp.data && resp.data.message) {\n                        $scope.message = resp.data.message;\n                    }\n                    if(resp.data && resp.data.error) {\n                        $scope.message = resp.data.error;\n                    }\n                    \n                },\n                //ERROR\n                function(resp) {\n                    console.log('ERROR', resp);\n                    if(resp.data && resp.data.error) {\n                        $scope.message = resp.data.error;\n                    }\n                    else {\n                        $scope.message = 'An error occurred.';\n                    }\n                }\n            );\n            \n        };\n        \n        $scope.submitPw = function() {\n        \n            var paramObj = {code:resetCode, password:$scope.pw};\n            $http.post('ws/sys/passwordReset', paramObj).then(\n              function(resp) {\n                var responseObj = resp.data;\n                if(responseObj.error) {\n                    if(responseObj.error == '$complexity_requirements') {\n                        $scope.message = 'Password does not meet complexity requirements';\n                        $scope.complexityRequirements = responseObj.requirements;\n                    }\n                    else if(responseObj.error == '$') {\n                        $scope.message = '';\n                    }\n                  \n                }\n                else if(responseObj.result === 'success') {\n                    $scope.message = 'Successfully changed password';\n                    $scope.showResetForm = false;\n                    $scope.showLoginLink = true;\n                }\n              },\n              function(err) {\n                var responseObj = err.data;\n                if(responseObj) {\n                   $scope.message = responseObj.error || err;\n                };\n              }\n            );\n        \n        };\n        \n        \n    })\n}",
+	"css_dependencies": [
+		{
+			"_disp": "bootstrap.min.css",
+			"_id": "o4W541R8SOaAsLdTAFRwBw",
+			"name": "bootstrap.min.css",
+			"path": "bower_components/bootstrap/dist/css"
+		}
+	],
+	"head": "<title>Password Reset</title>",
+	"js_dependencies": [
+		{
+			"_disp": "angular.min.js",
+			"_id": "YHk7GG6fQIKjEFXm7zTmFg",
+			"name": "angular.min.js",
+			"path": "bower_components/angular"
+		}
+	],
+	"module": null,
+	"name": "forgot_pw.html",
+	"path": "/",
+	"rolespec": [
+	]
+},
+{
+	"__ver": "sys-pkg:5",
+	"_class": "CodeModule",
+	"_id": "ZSx0FUI2S3KdenaXgISYPQ",
+	"code": "function (db, nodeRequire, Q, _) {\n    var exports = {};\n    var nodemailer = nodeRequire('nodemailer');\n    var handlebars = nodeRequire('handlebars');\n    \n    exports.sendEmail = function(transportId, messageId, contextObj, recipients) {\n        console.log('email %s %s %j', transportId, messageId, contextObj);\n        var deferred = Q.defer();\n        \n        var transportObj;\n        var messageObj;\n        \n        Q.all([\n            db.EmailTransport.findOne({_id:transportId}), \n            db.EmailMessage.findOne({_id:messageId})\n        ])\n        .then(function(resultArr) {\n            transportObj = resultArr[0];\n            messageObj = resultArr[1];\n            \n            if(!transportObj) {\n                throw deferred.reject('Invalid transport id '+transportId);\n            }\n            if(!messageObj) {\n                throw deferred.reject('Invalid message id '+messageId);\n            }\n            if(!messageObj.recipients && !recipients) {\n                throw deferred.reject('Message '+messageId+' missing recipient list');\n            }\n            \n            if(messageObj.recipients) {\n                return db.EmailRecipientList.findOne({_id:messageObj.recipients._id});\n            }\n            else {\n                return false;\n            }\n            \n            \n        })\n        .then(function(recipientListObj) {\n            if(!recipientListObj && !recipients) {\n                throw deferred.reject('Message '+messageId+' has invalid recipient list ref');\n            }\n            \n            if(recipients) {\n                console.log('RECIPIENTS PASSED IN: %j', recipients);\n                return recipients;\n            }\n            \n            return recipientListObj.addresses;\n        })\n        .then(function(emailAddressArr) {\n            console.log(emailAddressArr);\n            if(!emailAddressArr || emailAddressArr.length === 0) {\n                throw deferred.reject('No recipients found for message '+messageId);\n            }\n            \n            var transporter = nodemailer.createTransport(transportObj.config);\n            var mailObj = transportObj.options || {};\n            mailObj.to = emailAddressArr.join();\n            \n            if(contextObj) {\n                var subjTemplate = handlebars.compile(messageObj.subject);\n                var bodyTemplate = handlebars.compile(messageObj.body);\n                mailObj.subject = subjTemplate(contextObj);\n                mailObj.text = bodyTemplate(contextObj);\n            }\n            else{\n                mailObj.subject = messageObj.subject;\n                mailObj.text = messageObj.body;\n            }\n            console.log('sending %j', mailObj);\n            transporter.sendMail(\n                mailObj, \n                function(err, info) {\n                    if(err) {\n                        deferred.reject(err);\n                    }\n                    deferred.resolve(info);\n                }\n            );\n        })\n        ;\n        \n        \n        return deferred.promise;\n    };\n    \n    \n    return exports;\n}",
+	"name": "EmailService",
+	"path": "sys/email"
+},
+{
+	"__ver": "sys-pkg:3",
+	"_class": "Config",
+	"_id": "4l8p_D7ESVS41zZuAgq5jA",
+	"allow_customize": false,
+	"key": "sys.email.passwordReset",
+	"rolespec": [
+	],
+	"system": false,
+	"value": {
+		"message": "4z1LSTfLQpecUzE9AdkrEw",
+		"transport": "id of EmailTransport to use for sending",
+		"userToEmail[option1]": {
+			"emailField": "email",
+			"refClass": "OtherClass",
+			"refField": "user"
+		},
+		"userToEmail[option2]": "a field on User"
+	}
+},
+{
+	"__ver": "sys-pkg:1",
+	"_class": "Config",
+	"_id": "D35PIWqFRaaWn_5SyB_CEg",
+	"key": "sys.dbui.perspective.default.EmailMessage",
+	"system": false,
+	"value": {
+		"edit": {
+			"layout": [
+				"recipients",
+				"subject",
+				"body"
+			]
+		},
+		"list": {
+			"fields": [
+				"subject",
+				"recipients"
+			]
+		},
+		"view": {
+			"layout": [
+				"recipients",
+				"subject",
+				"body"
+			]
+		}
+	}
+},
+{
+	"__ver": "sys-pkg:7",
+	"_class": "Config",
+	"_id": "O0FJXhFKR6Ou6949OTHzfA",
+	"allow_customize": false,
+	"key": "sys.publicUrl",
+	"rolespec": [
+	],
+	"system": false,
+	"value": {
+		"regex": "forgot_pw.html(:?\\?.+)?$|[pP]asswordReset(:?\\?.+)?$"
+	}
+},
+{
+	"__ver": "sys-pkg:1",
+	"_class": "Config",
+	"_id": "Q0e4YR9TTQ-qr2xC3fUwIw",
+	"key": "sys.dbui.perspective.default.EmailRecipientList",
+	"system": false,
+	"value": {
+		"edit": {
+			"layout": [
+				"name",
+				"addresses",
+				"query_obj"
+			]
+		},
+		"list": {
+			"fields": [
+				"name",
+				"addresses"
+			]
+		},
+		"picker_list": {
+			"fields": [
+				"name",
+				"addresses"
+			]
+		},
+		"view": {
+			"layout": [
+				"name",
+				"addresses",
+				"query_obj"
+			]
+		}
+	}
+},
+{
+	"__ver": "sys-pkg:1",
+	"_class": "Config",
+	"_id": "ipxt6xkKQquPjOZLWRz4uw",
+	"allow_customize": false,
+	"key": "sys.dbui.perspective.default.EmailTransport",
+	"rolespec": [
+	],
+	"system": false,
+	"value": {
+		"edit": {
+			"layout": [
+				"name",
+				"config",
+				"options"
+			]
+		},
+		"list": {
+			"fields": [
+				"name",
+				"config"
+			]
+		},
+		"view": {
+			"layout": [
+				"name",
+				"config",
+				"options"
+			]
+		}
+	}
+},
+{
+	"__ver": "sys-pkg:13",
+	"_class": "DataTrigger",
+	"_id": "CXX81RnNQ4Cl1m_uzcLhsg",
+	"action": "function (EmailService, config, db, Q) {\n    var targetObj = this;\n    // var jwt = nodeRequire('jsonwebtoken');\n    \n    targetObj.code = db.generateId(); //jwt.sign({id:targetObj.user._id}, 'CXX81RnNQ4Cl1m_uzcLhsg');\n    //Generate a code, send the email\n    \n    return Q.all([\n        config.getParameter('sys.email.passwordReset', false),\n        config.getParameter('sys.serverUrl', false)\n    ]).then(function(resultArr) {\n        var resetConfig = resultArr[0];\n        var serverUrl = resultArr[1];\n        \n        var transportId = resetConfig.transport;\n        var messageId = resetConfig.message;\n        var emailAddress = targetObj.email;\n        \n        if(!transportId || !messageId) {\n            throw new Error('invalid sys.email.passwordReset config; missing transport and/or message ids');\n        }\n        \n        var resetLink = serverUrl+'/forgot_pw.html?c='+targetObj.code;\n        var subject = resetConfig.subject_line || 'Password Reset Request';\n        EmailService.sendEmail(transportId, messageId, {reset_link:resetLink, user:targetObj.user, subject_line:subject}, [emailAddress]).then(function(result) {\n            console.log('pw reset email result: %j', result);\n        }, \n        function(err) {\n            console.log('error sending pw reset email: %j', err);\n        });\n    });\n}",
+	"before_after": "before",
+	"business_object": {
+		"_disp": "PasswordResetRequest",
+		"_id": "Wquqn1IhTNuZk7M4pNLveg"
+	},
+	"doc": "Generate a code and send the reset email.",
+	"key": "sys.email.PasswordResetRequest.on_create",
+	"on_create": true,
+	"on_delete": false,
+	"on_update": false
+},
+{
+	"__ver": "sys-pkg:2",
+	"_class": "EmailMessage",
+	"_id": "4z1LSTfLQpecUzE9AdkrEw",
+	"body": "Follow the link below to reset your password:\n\n{{{ reset_link }}}",
+	"subject": "{{ subject_line }}"
+},
+{
+	"__ver": "sys-pkg:1",
+	"_class": "EmailTransport",
+	"_id": "px8kYWB5SPC72t3Oqvbf7w",
+	"config": {
+		"auth": {
+			"pass": "pass",
+			"user": "user@gmail.com"
+		},
+		"service": "gmail"
+	},
+	"name": "Gmail - sample"
+},
+{
+	"__ver": "sys-pkg:1",
+	"_class": "LabelGroup",
+	"_id": "8t6faAADT-iEuMoeFQqB8Q",
+	"key": "sys.dbui.bo.EmailMessage",
+	"language": {
+		"_disp": "English",
+		"_id": "-9vPfv2lEeSFtiimx_V4dw",
+		"code": "en"
+	},
+	"value": {
+		"body": "Body",
+		"recipients": "Recipients",
+		"subject": "Subject"
+	}
+},
+{
+	"__ver": "sys-pkg:1",
+	"_class": "LabelGroup",
+	"_id": "Ge2VBpNXSwqKIeFRgV5McA",
+	"key": "sys.dbui.bo.EmailRecipientList",
+	"language": {
+		"_disp": "English",
+		"_id": "-9vPfv2lEeSFtiimx_V4dw",
+		"code": "en"
+	},
+	"value": {
+		"addresses": "Addresses",
+		"name": "Name",
+		"query_obj": "Query Obj"
+	}
+},
+{
+	"__ver": "sys-pkg:1",
+	"_class": "LabelGroup",
+	"_id": "hP2fT989T4C5X8I5iFt11A",
+	"key": "sys.dbui.bo.EmailTransport",
+	"language": {
+		"_disp": "English",
+		"_id": "-9vPfv2lEeSFtiimx_V4dw",
+		"code": "en"
+	},
+	"value": {
+		"config": "Config",
+		"name": "Name"
+	}
+},
+{
+	"__ver": "sys-pkg:2",
+	"_class": "WebService",
+	"_id": "VVA5VVZ9RQ-5idW42T07ow",
+	"function": "function (db, _, nodeRequire, queryParams) {\n    console.log('/sys/validatePasswordReset');\n    var moment = nodeRequire('moment');\n    \n    return db.PasswordResetRequest.find({code:queryParams.code}).then(function(prrList) {\n        \n        var result = false;\n        _.forEach(prrList, function(prr) {\n            var reqDate = moment(prr.created_date);\n            reqDate.add(1, 'day');\n            if(reqDate.isAfter(moment())) {\n                //Adding 1 day pushes it into future -> it was recent enough\n                result = {\n                    user:prr.user._id\n                };\n            }\n            \n        });\n        \n        if(!result) {\n            result = {\n                error:'$invalid-code'\n            };\n        }\n        \n        return result;\n    });\n}",
+	"path": "/sys/validatePasswordReset",
+	"rolespec": [
+	]
+},
+{
+	"__ver": "sys-pkg:12",
+	"_class": "WebService",
+	"_id": "tGlPRXCUTDOeD2C5gMB1hw",
+	"function": "function (db, postBody, config, _, nodeRequire) {\n    console.log('/sys/passwordReset %j', postBody);\n    \n    if(!postBody.username && !postBody.code) {\n        throw 'Missing required parameter';\n    }\n    \n    if(postBody.code) {\n        //Submitting the actual new password\n        var moment = nodeRequire('moment');\n    \n        return db.PasswordResetRequest.find({code:postBody.code}).then(function(prrList) {\n            \n            var matchingPrr;\n            \n            _.forEach(prrList, function(prr) {\n                var reqDate = moment(prr.created_date);\n                reqDate.add(1, 'day');\n                if(reqDate.isAfter(moment())) {\n                    //Adding 1 day pushes it into future -> it was recent enough\n                    matchingPrr = prr;\n                }\n                else {\n                    prr.remove();\n                }\n            });\n            \n            if(!matchingPrr) {\n                return { error:'$invalid-code' };\n            }\n            \n            var user = matchingPrr.user;\n            var newPassword = postBody.password;\n            \n            return config.getParameter('sys.password_complexity', false).then(function(complexityDesc) {\n                  if(complexityDesc) {\n                    var checkerRegex = new RegExp(complexityDesc.regex);\n                    if(!checkerRegex.test(newPassword)) {\n                      return {error:'$complexity_requirements', requirements:complexityDesc.description};\n                    }\n                  }\n                  \n                  return db.User.findOne({_id:user._id}).then(function(userObj) {\n                      userObj.password = newPassword;\n                      return userObj.save().then(function() {\n                          matchingPrr.remove();\n                          return {result:'success'};\n                        }\n                      );\n                  });\n            });\n            \n        });\n    }\n    else {\n        \n        var theUser;\n        \n        return db.User.findOne({name:postBody.username}).then(function(u) {\n            if(!u) {\n                throw 'User '+postBody.username+' not found.';\n            }\n            theUser = u;\n            //Map user to email address via config sys.email.userToEmail\n            return config.getParameter('sys.email.passwordReset', false);\n            \n        })\n        .then(function(pwResetConfig) {\n            if(!pwResetConfig) {\n                throw new Error('PW Reset not configured properly (missing config item sys.email.passwordReset)');\n            }\n            var emailMapping = pwResetConfig.userToEmail || 'name';\n            //emailMapping tells us where to find the email address for a user, e.g.\n            \n            if(typeof emailMapping === 'string') {\n                //emailMapping is a string -> addy is a field on the User itself\n                return theUser[emailMapping];\n            }\n            else {\n                //emailMapping is object -> addy is a field somewhere else\n                // refClass.refField points to this user, and refClass.emailField has the address.\n                var refClass = emailMapping.refClass;\n                var refField = emailMapping.refField;\n                var emailField = emailMapping.emailField;\n                \n                var queryObj = {};\n                queryObj[refField] = theUser._id;\n                \n                return db[refClass].find(queryObj).then(function(result) {\n                    for(var i=0; i < result.length; i++) {\n                        var email = _.get(result[i], emailField);\n                        if(email) {\n                            return email;\n                        }\n                    }\n                    return false;\n                });\n            }\n        })\n        .then(function(userEmail) {\n            if(!userEmail) {\n                throw 'No email found for '+postBody.username;\n            }\n            \n            var prrObj = new db.PasswordResetRequest({\n                user:theUser,\n                email:userEmail\n            });\n            \n            return prrObj.save().then(function(){\n                return {\n                    message:'Submitted.  Check your email and follow the instructions',\n                    result:'success'\n                }\n            });\n            \n            \n        })\n        ;\n    }\n    \n}",
+	"path": "/sys/passwordReset",
+	"rolespec": [
+	]
+}]}
