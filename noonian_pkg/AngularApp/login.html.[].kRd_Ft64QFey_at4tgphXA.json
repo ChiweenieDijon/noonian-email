@@ -1,9 +1,5 @@
 {
-	"__ver": {
-		"external_pkg": true,
-		"update_to": "sys:24",
-		"version": "sys:24|sys-pkg:3"
-	},
+	"__ver": "sys:24|sys-pkg:4",
 	"_id": "kRd_Ft64QFey_at4tgphXA",
 	"css_dependencies": [
 		{
