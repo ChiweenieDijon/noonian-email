@@ -32,6 +32,10 @@ function ($controllerProvider, $locationProvider) {
                     if(resp.data && resp.data.error === '$invalid_credentials') {
                         $scope.message = 'Invalid login credentials.  Please try again.';
                     }
+                    else if(resp.data && resp.data.twoFactorRequired) {
+                        $scope.twoFactor = true;
+                        $scope.message = 'Two-factor authentication required.  Please type in code sent to your phone.';
+                    }
                     else {
                         $scope.message = (resp.data && resp.data.error) || resp.statusText
                     }

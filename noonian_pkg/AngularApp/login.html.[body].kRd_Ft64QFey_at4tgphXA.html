@@ -5,17 +5,22 @@
       <div class="row">
         <div class="col-sm-6">
           <form class="form-horizontal" ng-submit="submit()">
-            <div class="form-group">
+            <div class="form-group" ng-hide="twoFactor">
               <label for="username" class="control-label">Username</label>
               <input type="text" class="form-control" ng-model="postData.username"/>
             </div>
-            <div class="form-group">
+            <div class="form-group" ng-hide="twoFactor">
               <label for="password" class="control-label">Password</label>
-              <input type="password" class="form-control" ng-model="postData.password" />
+              <input name="password" type="password" class="form-control" ng-model="postData.password" />
+            </div>
+            
+            <div class="form-group" ng-show="twoFactor">
+                <label for="verifycode" class="control-label">Verification code</label>
+                <input name="verifycode" type="text" class="form-control" ng-model="postData.second_factor_code" />
             </div>
             
             <input type="submit" class="btn btn-default" value="Login" />
-            <a href="forgot_pw.html" target="_self" style="float:right">I forgot my password</a>
+            <a href="forgot_pw.html"  ng-hide="twoFactor" target="_self" style="float:right">I forgot my password</a>
           </form>
         </div>
       </div>
