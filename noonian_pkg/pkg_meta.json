@@ -1,12 +1,13 @@
 {
-	"__ver": "sys-pkg:3",
+	"__ver": "sys-pkg:7",
 	"_id": "oJAyYGU-TmmRaVUzIq6TLg",
 	"description": "Objects and APIs to support sending Emails",
+	"enable_building": false,
 	"key": "sys.email",
 	"major_version": 0,
 	"manifest": {
 		"AngularApp": {
-			"kRd_Ft64QFey_at4tgphXA": "sys:26|sys-pkg:5",
+			"kRd_Ft64QFey_at4tgphXA": "sys:27|sys-pkg:5",
 			"uz92VzHGQBiXE2pY1ydunw": "sys-pkg:16"
 		},
 		"BusinessObjectDef": {
@@ -39,19 +40,16 @@
 			"Ge2VBpNXSwqKIeFRgV5McA": "sys-pkg:1",
 			"hP2fT989T4C5X8I5iFt11A": "sys-pkg:1"
 		},
-		"PackageConflict": {
-			"2EY_IH2-ROOnGfHWoN3x9w": "sys-pkg:2"
-		},
 		"WebService": {
 			"VVA5VVZ9RQ-5idW42T07ow": "sys-pkg:2",
-			"tGlPRXCUTDOeD2C5gMB1hw": "sys-pkg:12"
+			"tGlPRXCUTDOeD2C5gMB1hw": "sys-pkg:13"
 		}
 	},
-	"minor_version": 10,
+	"minor_version": 13,
 	"name": "Email",
 	"package_file": {
-		"attachment_id": "7SUZB_MDRtOVN4RE3T-HQg",
-		"filename": "sys.email.0.10.json",
+		"attachment_id": "MVNJAu3lQDKquXH82cUZQg",
+		"filename": "sys.email.0.13.json",
 		"type": "application/json"
 	}
 }
