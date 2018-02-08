@@ -74,7 +74,7 @@ function (db, postBody, config, _, nodeRequire) {
             
             if(typeof emailMapping === 'string') {
                 //emailMapping is a string -> addy is a field on the User itself
-                return theUser[emailMapping];
+                return _.get(theUser, emailMapping);
             }
             else {
                 //emailMapping is object -> addy is a field somewhere else
