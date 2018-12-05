@@ -3,9 +3,12 @@ function ($controllerProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
     
     $controllerProvider.register('LoginController', function($scope, $http, $location, $window) {
-        console.log('LoginController');
         
-        document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        var urlBaseRegex = /^https?:\/\/[^\/]+(\/[^\/]+\/)login.html/;
+        var match = urlBaseRegex.exec($location.absUrl());
+        var urlBase = (match && match[1]) || '/';
+        document.cookie = 'access_token=; expires='+(new Date(Date.now()-1000).toGMTString())+'; path='+urlBase;
+        
         
         $scope.message = "Please enter username and password below";
         $scope.postData = {};

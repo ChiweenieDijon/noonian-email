@@ -1,13 +1,15 @@
 {
 "metadata":{
 	"_id": "oJAyYGU-TmmRaVUzIq6TLg",
+	"changelog": [
+	],
 	"description": "Objects and APIs to support sending Emails",
 	"enable_building": false,
 	"key": "sys.email",
 	"major_version": 0,
 	"manifest": {
 		"AngularApp": {
-			"kRd_Ft64QFey_at4tgphXA": "sys:27|sys-pkg:5",
+			"kRd_Ft64QFey_at4tgphXA": "sys:34|sys-pkg:6",
 			"uz92VzHGQBiXE2pY1ydunw": "sys-pkg:16"
 		},
 		"BusinessObjectDef": {
@@ -22,6 +24,7 @@
 		"Config": {
 			"4l8p_D7ESVS41zZuAgq5jA": "sys-pkg:3",
 			"D35PIWqFRaaWn_5SyB_CEg": "sys-pkg:1",
+			"M1cmYRNXQJC0yeXlwQbeOQ": "sys-pkg:3",
 			"O0FJXhFKR6Ou6949OTHzfA": "sys-pkg:7",
 			"Q0e4YR9TTQ-qr2xC3fUwIw": "sys-pkg:1",
 			"ipxt6xkKQquPjOZLWRz4uw": "sys-pkg:1"
@@ -45,7 +48,7 @@
 			"tGlPRXCUTDOeD2C5gMB1hw": "sys-pkg:13"
 		}
 	},
-	"minor_version": 13,
+	"minor_version": 14,
 	"name": "Email"
 },
 "business_objects":[
@@ -132,11 +135,11 @@
 },
 {
 	"__t": "AngularApp",
-	"__ver": "sys:27|sys-pkg:5",
+	"__ver": "sys:34|sys-pkg:6",
 	"_class": "AngularApp",
 	"_id": "kRd_Ft64QFey_at4tgphXA",
 	"body": "<div class=\"container\" ng-controller=\"LoginController\">\n      <div class=\"row\">\n        <div class=\"col-sm-6\">{{message}}</div>\n      </div>\n      <div class=\"row\">\n        <div class=\"col-sm-6\">\n          <form class=\"form-horizontal\" ng-submit=\"submit()\">\n            <div class=\"form-group\" ng-hide=\"twoFactor\">\n              <label for=\"username\" class=\"control-label\">Username</label>\n              <input type=\"text\" class=\"form-control\" ng-model=\"postData.username\"/>\n            </div>\n            <div class=\"form-group\" ng-hide=\"twoFactor\">\n              <label for=\"password\" class=\"control-label\">Password</label>\n              <input name=\"password\" type=\"password\" class=\"form-control\" ng-model=\"postData.password\" />\n            </div>\n            \n            <div class=\"form-group\" ng-show=\"twoFactor\">\n                <label for=\"verifycode\" class=\"control-label\">Verification code</label>\n                <input name=\"verifycode\" type=\"text\" class=\"form-control\" ng-model=\"postData.second_factor_code\" />\n            </div>\n            \n            <input type=\"submit\" class=\"btn btn-default\" value=\"Login\" />\n            <a href=\"forgot_pw.html\"  ng-hide=\"twoFactor\" target=\"_self\" style=\"float:right\">I forgot my password</a>\n          </form>\n        </div>\n      </div>\n  </div>",
-	"config_function": "function ($controllerProvider, $locationProvider) {\n    \n    $locationProvider.html5Mode(true);\n    \n    $controllerProvider.register('LoginController', function($scope, $http, $location, $window) {\n        console.log('LoginController');\n        \n        document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';\n        \n        $scope.message = \"Please enter username and password below\";\n        $scope.postData = {};\n        \n        var urlParams = $location.search();\n        \n        \n        $scope.submit = function() {\n            \n            $http({\n                method:'POST',\n                url:'auth/login',\n                data:$scope.postData\n            }).then(\n                //Success:\n                function(resp) {\n                    console.log('Login response: ', resp);\n                    var redirectLink = (urlParams && urlParams.originalUrl) || '.';\n                    $window.location.href = redirectLink;\n                },\n                //ERROR\n                function(resp) {\n                    console.log('ERROR', resp);\n                    if(resp.data && resp.data.error === '$invalid_credentials') {\n                        $scope.message = 'Invalid login credentials.  Please try again.';\n                    }\n                    else if(resp.data && resp.data.error === '$missing_phone') {\n                        $scope.message = 'Two-factor authentication is required, but your user account is missing a phone number.  Please contact an administrator to resolve the issue.';\n                    }\n                    else if(resp.data && resp.data.twoFactorRequired) {\n                        $scope.twoFactor = true;\n                        $scope.message = 'Two-factor authentication required.  Please type in code sent to your phone.';\n                    }\n                    else {\n                        $scope.message = (resp.data && resp.data.error) || resp.statusText\n                    }\n                }\n            );\n            \n        }\n    })\n}",
+	"config_function": "function ($controllerProvider, $locationProvider) {\n    \n    $locationProvider.html5Mode(true);\n    \n    $controllerProvider.register('LoginController', function($scope, $http, $location, $window) {\n        \n        var urlBaseRegex = /^https?:\\/\\/[^\\/]+(\\/[^\\/]+\\/)login.html/;\n        var match = urlBaseRegex.exec($location.absUrl());\n        var urlBase = (match && match[1]) || '/';\n        document.cookie = 'access_token=; expires='+(new Date(Date.now()-1000).toGMTString())+'; path='+urlBase;\n        \n        \n        $scope.message = \"Please enter username and password below\";\n        $scope.postData = {};\n        \n        var urlParams = $location.search();\n        \n        \n        $scope.submit = function() {\n            \n            $http({\n                method:'POST',\n                url:'auth/login',\n                data:$scope.postData\n            }).then(\n                //Success:\n                function(resp) {\n                    console.log('Login response: ', resp);\n                    var redirectLink = (urlParams && urlParams.originalUrl) || '.';\n                    $window.location.href = redirectLink;\n                },\n                //ERROR\n                function(resp) {\n                    console.log('ERROR', resp);\n                    if(resp.data && resp.data.error === '$invalid_credentials') {\n                        $scope.message = 'Invalid login credentials.  Please try again.';\n                    }\n                    else if(resp.data && resp.data.error === '$missing_phone') {\n                        $scope.message = 'Two-factor authentication is required, but your user account is missing a phone number.  Please contact an administrator to resolve the issue.';\n                    }\n                    else if(resp.data && resp.data.twoFactorRequired) {\n                        $scope.twoFactor = true;\n                        $scope.message = 'Two-factor authentication required.  Please type in code sent to your phone.';\n                    }\n                    else {\n                        $scope.message = (resp.data && resp.data.error) || resp.statusText\n                    }\n                }\n            );\n            \n        }\n    })\n}",
 	"css_dependencies": [
 		{
 			"_disp": "bootstrap.min.css",
@@ -241,6 +244,48 @@
 			"layout": [
 				"recipients",
 				"subject",
+				"body"
+			]
+		}
+	}
+},
+{
+	"__ver": "sys-pkg:3",
+	"_class": "Config",
+	"_id": "M1cmYRNXQJC0yeXlwQbeOQ",
+	"key": "sys.dbui.perspective.sys_dev.AngularApp",
+	"system": false,
+	"value": {
+		"edit": {
+			"layout": [
+				"path",
+				"name",
+				"rolespec",
+				"module",
+				"css_dependencies",
+				"js_dependencies",
+				"config_function",
+				"head",
+				"body"
+			]
+		},
+		"list": {
+			"fields": [
+				"path",
+				"name",
+				"module"
+			]
+		},
+		"view": {
+			"layout": [
+				"path",
+				"name",
+				"rolespec",
+				"module",
+				"css_dependencies",
+				"js_dependencies",
+				"config_function",
+				"head",
 				"body"
 			]
 		}
