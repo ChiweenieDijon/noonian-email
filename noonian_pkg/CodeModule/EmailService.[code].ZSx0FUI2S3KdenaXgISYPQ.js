@@ -1,9 +1,34 @@
-function (db, nodeRequire, Q, _) {
-    var exports = {};
-    var nodemailer = nodeRequire('nodemailer');
-    var handlebars = nodeRequire('handlebars');
+function (db, Q, _) {
+    const exports = {};
+    const nodemailer = require('nodemailer');
+    const handlebars = require('handlebars');
     
-    exports.sendEmail = function(transportId, messageId, contextObj, recipients) {
+    const gridFs = db._svc.GridFsService;
+    
+    //From gridfs attachments create a list of nodemailer attachments
+    //
+    const buildAttachmentsList = function(attachmentList) {
+        var promiseChain = Q(true);
+        const ret = [];
+        
+        const addFile = function(id, name) {
+            return gridFs.getFile(id).then(r=>{
+                ret.push({
+                    content:r.readstream,
+                    filename:name
+                });
+            });
+        }
+        _.forEach(attachmentList, att=>{
+            promiseChain = promiseChain.then(addFile.bind(null,att.attachment_id,att.filename));
+        });
+        promiseChain = promiseChain.then(()=>{
+            return ret;
+        });
+        return promiseChain;
+    };
+    
+    exports.sendEmail = function(transportId, messageId, contextObj, recipients, attachments) {
         console.log('email %s %s %j', transportId, messageId, contextObj);
         var deferred = Q.defer();
         
@@ -28,28 +53,43 @@ function (db, nodeRequire, Q, _) {
                 throw deferred.reject('Message '+messageId+' missing recipient list');
             }
             
+            const passAlong = [];
+            
             if(messageObj.recipients) {
-                return db.EmailRecipientList.findOne({_id:messageObj.recipients._id});
+                passAlong.push(db.EmailRecipientList.findOne({_id:messageObj.recipients._id}).exec());
             }
             else {
-                return false;
+                passAlong.push(false);
             }
             
+            if(messageObj.attachments) {
+                passAlong.push(buildAttachmentsList(messageObj.attachments));
+            }
+            else {
+                passAlong.push(false);
+            }
+            
+            return Q.all(passAlong);
             
         })
-        .then(function(recipientListObj) {
-            if(!recipientListObj && !recipients) {
-                throw deferred.reject('Message '+messageId+' has invalid recipient list ref');
+        .then(function([recipientListObj, msgAttachmetList]) {
+            if(!recipients && !(recipientListObj && recipientListObj.addresses && recipientListObj.addresses.length)) {
+                throw deferred.reject('No recipients for message '+messageId);
             }
             
-            if(recipients) {
-                console.log('RECIPIENTS PASSED IN: %j', recipients);
-                return recipients;
+            recipients = recipients || [];
+            if(recipientListObj && recipientListObj.addresses && recipientListObj.addresses.length) {
+                recipients = recipients.concat(recipientListObj.addresses);
             }
             
-            return recipientListObj.addresses;
+            attachments = attachments || [];
+            if(msgAttachmetList && msgAttachmetList.length) {
+                attachments = attachments.concat(msgAttachmetList);
+            }
+            
+            return [recipients, attachments];
         })
-        .then(function(emailAddressArr) {
+        .then(function([emailAddressArr, attachmentArr]) {
             console.log(emailAddressArr);
             if(!emailAddressArr || emailAddressArr.length === 0) {
                 throw deferred.reject('No recipients found for message '+messageId);
@@ -59,16 +99,36 @@ function (db, nodeRequire, Q, _) {
             var mailObj = transportObj.options || {};
             mailObj.to = emailAddressArr.join();
             
+            var textBody = messageObj.text_body || messageObj.body;
+            var htmlBody = messageObj.html_body;
+            
             if(contextObj) {
                 var subjTemplate = handlebars.compile(messageObj.subject);
-                var bodyTemplate = handlebars.compile(messageObj.body);
+                var textTemplate = textBody && handlebars.compile(textBody);
+                var htmlTemplate = htmlBody && handlebars.compile(htmlBody);
                 mailObj.subject = subjTemplate(contextObj);
-                mailObj.text = bodyTemplate(contextObj);
+                
+                if(textBody) {
+                    mailObj.text = textTemplate(contextObj);
+                }
+                if(htmlBody) {
+                    mailObj.html = htmlTemplate(contextObj);
+                }
             }
             else{
                 mailObj.subject = messageObj.subject;
-                mailObj.text = messageObj.body;
+                if(textBody) {
+                    mailObj.text = textBody;
+                }
+                if(htmlBody) {
+                    mailObj.html = htmlBody;
+                }
             }
+            
+            if(attachmentArr && attachmentArr.length) {
+                mailObj.attachments = attachmentArr;
+            }
+            
             console.log('sending %j', mailObj);
             transporter.sendMail(
                 mailObj, 

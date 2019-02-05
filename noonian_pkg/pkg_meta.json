@@ -1,5 +1,5 @@
 {
-	"__ver": "sys-pkg:8",
+	"__ver": "sys-pkg:9",
 	"_id": "oJAyYGU-TmmRaVUzIq6TLg",
 	"changelog": [
 	],
@@ -13,17 +13,17 @@
 			"uz92VzHGQBiXE2pY1ydunw": "sys-pkg:16"
 		},
 		"BusinessObjectDef": {
-			"ECYM18GkSPmhOJ1s-SYZ-A": "sys-pkg:1",
+			"ECYM18GkSPmhOJ1s-SYZ-A": "sys-pkg:3",
 			"Wquqn1IhTNuZk7M4pNLveg": "sys-pkg:1",
 			"x8JPTt3uSKuEtu2R4qKBNQ": "sys-pkg:1",
 			"xGOtowhXRQKPapjKv1Us7A": "sys-pkg:1"
 		},
 		"CodeModule": {
-			"ZSx0FUI2S3KdenaXgISYPQ": "sys-pkg:5"
+			"ZSx0FUI2S3KdenaXgISYPQ": "sys-pkg:7"
 		},
 		"Config": {
 			"4l8p_D7ESVS41zZuAgq5jA": "sys-pkg:3",
-			"D35PIWqFRaaWn_5SyB_CEg": "sys-pkg:1",
+			"D35PIWqFRaaWn_5SyB_CEg": "sys-pkg:2",
 			"M1cmYRNXQJC0yeXlwQbeOQ": "sys-pkg:3",
 			"O0FJXhFKR6Ou6949OTHzfA": "sys-pkg:7",
 			"Q0e4YR9TTQ-qr2xC3fUwIw": "sys-pkg:1",
@@ -39,7 +39,7 @@
 			"px8kYWB5SPC72t3Oqvbf7w": "sys-pkg:1"
 		},
 		"LabelGroup": {
-			"8t6faAADT-iEuMoeFQqB8Q": "sys-pkg:1",
+			"8t6faAADT-iEuMoeFQqB8Q": "sys-pkg:4",
 			"Ge2VBpNXSwqKIeFRgV5McA": "sys-pkg:1",
 			"hP2fT989T4C5X8I5iFt11A": "sys-pkg:1"
 		},
@@ -48,11 +48,12 @@
 			"tGlPRXCUTDOeD2C5gMB1hw": "sys-pkg:13"
 		}
 	},
-	"minor_version": 14,
+	"minor_version": 15,
 	"name": "Email",
 	"package_file": {
-		"attachment_id": "S8mEuI7KTtKWTS8MA-yVZg",
-		"filename": "sys.email.0.14.json",
+		"attachment_id": "TDzkpUn6S86jccmNBrjDlg",
+		"filename": "sys.email.0.15.0.json",
 		"type": "application/json"
-	}
+	},
+	"version": "0.15.0"
 }
