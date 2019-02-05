@@ -1,10 +1,26 @@
 {
-	"__ver": "sys-pkg:1",
+	"__ver": "sys-pkg:3",
 	"_id": "ECYM18GkSPmhOJ1s-SYZ-A",
+	"abstract": false,
 	"class_name": "EmailMessage",
 	"definition": {
+		"attachments": [
+			{
+				"type": "attachment"
+			}
+		],
 		"body": {
 			"type": "text"
+		},
+		"description": {
+			"type": "text"
+		},
+		"html_body": {
+			"language": "html",
+			"type": "sourcecode"
+		},
+		"name": {
+			"type": "string"
 		},
 		"recipients": {
 			"ref_class": "EmailRecipientList",
@@ -12,7 +28,11 @@
 		},
 		"subject": {
 			"type": "string"
+		},
+		"text_body": {
+			"type": "text"
 		}
 	},
+	"doc": "Acts as a template\n @property {attachment[]} attachments \n @property {text} body \n @property {sourcecode} html_body \n @property {reference.<EmailRecipientList>} recipients \n @property {string} subject \n @property {text} text_body \n\n @property {text} description \n @property {string} name \n",
 	"system": true
 }
